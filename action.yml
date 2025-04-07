@@ -491,11 +491,11 @@ inputs:
     required: false
   expand-diff:
     default: "false"
-    description: "Expand the collapsible diff output section (e.g., `false`)."
+    description: "Expand the collapsible diff section (e.g., `false`)."
     required: false
   expand-summary:
     default: "false"
-    description: "Expand the collapsible summary output section (e.g., `false`)."
+    description: "Expand the collapsible summary section (e.g., `false`)."
     required: false
   format:
     default: "false"
