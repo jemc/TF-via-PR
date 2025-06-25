@@ -349,7 +349,7 @@ runs:
         # If "tf.diff.txt" exists, display it within a "diff" block, truncated for character limit.
         if [[ -s tf.diff.txt ]]; then
           # Get count of lines in "tf.diff.txt" which do not start with "# ".
-          diff_count=$(grep --invert-match '^# ' tf.diff.txt | wc --lines)
+          diff_count=$({ grep --invert-match '^# ' tf.diff.txt || true; } | wc --lines)
           if [[ $diff_count -eq 1 ]]; then diff_change="change"; else diff_change="changes"; fi
 
           # Parse diff of changes, truncated for character limit.
