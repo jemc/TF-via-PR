@@ -298,7 +298,7 @@ runs:
         if [[ "${{ steps.format.outcome }}" == "failure" ]]; then syntax="diff"; fi
 
         # List jobs from the current workflow run.
-        workflow_run=$(gh api /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}/jobs --header "$GH_API" --method GET --field per_page=100)
+        workflow_run=$(gh api /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}/jobs --header "$GH_API" --method GET --paginate)
 
         # Get the current job ID from the workflow run using different query methods for matrix and regular jobs.
         if [[ "$GH_MATRIX" == "null" ]]; then
@@ -319,7 +319,7 @@ runs:
             echo "Waiting to locate job ID; will try again in $retry_interval seconds."
             sleep "$retry_interval"
             retry_interval=$((retry_interval * 2))
-            workflow_run=$(gh api /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}/jobs --header "$GH_API" --method GET --field per_page=100)
+            workflow_run=$(gh api /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}/jobs --header "$GH_API" --method GET --paginate)
             job_id=$(echo "$workflow_run" | jq --raw-output --arg matrix "$matrix" '.jobs[] | select(.name | contains($matrix)) | .id' | tail -n 1)
           done
         fi
